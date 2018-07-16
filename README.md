@@ -26,7 +26,7 @@ python GUI.py
 - In case of plotting graphs, run "graph_plot.py" 
 
 # Results
-- TODO: compare with HR data from a PPG device
+- Data from a specialized device, Compact 5 medical Econet, is used for the ground truth. In certain circumstances, the Heart rate values measured using the application and the device are the same
 
 # Reference
 - Real Time Heart Rate Monitoring From Facial RGB Color Video Using Webcam by H. Rahman, M.U. Ahmed, S. Begum, P. Funk
