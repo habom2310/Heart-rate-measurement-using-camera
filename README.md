@@ -23,7 +23,7 @@
 ```
 python GUI.py
 ```
-- In case of plotting graphs,run "graph_plot.py" 
+- In case of plotting graphs, run "graph_plot.py" 
 
 # Results
 - TODO: compare with HR data from a PPG device
