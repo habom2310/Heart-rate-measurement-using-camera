@@ -24,6 +24,7 @@
 python GUI.py
 ```
 - In case of plotting graphs, run "graph_plot.py" 
+- For the Eulerian Video Magnification implementation, run "amplify_color.py"
 
 # Results
 - Data from a specialized device, Compact 5 medical Econet, is used for the ground truth. In certain circumstances, the Heart rate values measured using the application and the device are the same
