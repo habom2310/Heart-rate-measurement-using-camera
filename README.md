@@ -1,7 +1,7 @@
 # Heart-rate-measurement-using-camera
 ![Alt text](https://github.com/habom2310/Heart-rate-measurement-using-camera/blob/master/result.JPG)
 # Abstract
-- Heart Rate is one of the most important Physiological parameter and a vital indicator of people‘s physiological state
+- Heart Rate (HR) is one of the most important Physiological parameter and a vital indicator of people‘s physiological state
 - A non-contact based system to measure Heart Rate: real-time application using camera
 - Principal: extract heart rate information from facial skin color variation caused by blood circulation 
 - Application: monitoring drivers‘ physiological state
@@ -40,4 +40,4 @@ python GUI.py
 # Note
 - Application can only detect HR for 1 people at a time
 - Sudden change can cause incorrect HR calculation. In the most case, HR can be correctly detected after 10 seconds being stable infront of the camera
-- This github project is for study purpose only. If you want to use it for commercial purpose, please contact me at khanhhanguyen2310@gmail.com
+- This github project is for study purpose only. For other purposes, please contact me at khanhhanguyen2310@gmail.com
