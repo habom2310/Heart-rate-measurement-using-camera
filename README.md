@@ -34,6 +34,7 @@ python GUI.py
 - Remote Monitoring of Heart Rate using Multispectral Imaging in Group 2, 18-551, Spring 2015 by Michael Kellman Carnegie (Mellon University), Sophia Zikanova (Carnegie Mellon University) and Bryan Phipps (Carnegie Mellon University)
 - Non-contact, automated cardiac pulse measurements using video imaging and blind source separation by Ming-Zher Poh, Daniel J. McDuff, and Rosalind W. Picard
 - Camera-based Heart Rate Monitoring by Janus Nørtoft Jensen and Morten Hannemose
+- Graphs plotting is based on https://github.com/thearn/webcam-pulse-detector
 - https://www.pyimagesearch.com/2017/04/03/facial-landmarks-dlib-opencv-python/
 
 # Note
