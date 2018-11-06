@@ -41,3 +41,7 @@ python GUI.py
 - Application can only detect HR for 1 people at a time
 - Sudden change can cause incorrect HR calculation. In the most case, HR can be correctly detected after 10 seconds being stable infront of the camera
 - This github project is for study purpose only. For other purposes, please contact me at khanhhanguyen2310@gmail.com
+
+# UPDATE
+- 6/11: use pyqtgraph for plotting graph
+![Alt text](https://github.com/habom2310/Heart-rate-measurement-using-camera/blob/master/result.PNG)
