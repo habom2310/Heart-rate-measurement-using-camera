@@ -43,5 +43,7 @@ python GUI.py
 - This github project is for study purpose only. For other purposes, please contact me at khanhhanguyen2310@gmail.com
 
 # UPDATE
-- 6/11: use pyqtgraph for plotting graph
+- 6/11: 
+  - Use pyqtgraph for plotting graph
+  - Add age and gender detection
 ![Alt text](https://github.com/habom2310/Heart-rate-measurement-using-camera/blob/master/result.PNG)
