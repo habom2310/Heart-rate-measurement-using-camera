@@ -17,6 +17,7 @@
 - numpy, opencv, dlib, imutils, scipy, PyQt4
 - Download and put file "shape_predictor_68_face_landmarks.dat" in the project folder
 
+
 # Implementation
 - Install all needed packages
 - Run GUI.py, appplication can run on either camera or video mode
@@ -47,3 +48,5 @@ python GUI.py
   - Use pyqtgraph for plotting graph
   - Add age and gender detection
 ![Alt text](https://github.com/habom2310/Heart-rate-measurement-using-camera/blob/master/result.PNG)
+- 17/11:
+  - Add find 5 facial landmarks feature. Download and put `shape_predictor_68_face_landmarks.dat` in the project folder.
