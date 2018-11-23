@@ -6,7 +6,7 @@ I've just created 2 new classes which are cleaner and easier-to-follow than olde
 - `shape_predictor_5_face_landmarks.dat` and `shape_predictor_68_face_landmarks.dat` in the same folder.
 
 # Implementation
-- run `python test_signal_processing.py` because it has every you need :)
+- run `python test_signal_processing.py` because it has every thing you need :)
 
 Inside the `data.txt`
   ```
