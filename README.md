@@ -51,7 +51,7 @@ python GUI.py
 - 17/11:
   - Add find 5 facial landmarks feature. Download and put `shape_predictor_68_face_landmarks.dat` in the project folder.
 
-- 23/11: Add classes and tests
+- 23/11: Add classes and tests in `new_update` folder
   - `face_utilities`: functions to work with faces in a frame
   - `test_face_utilities.py`: test the functions in `face_utilities.py`
   - `signal_processing.py`: functions for signal processing.
