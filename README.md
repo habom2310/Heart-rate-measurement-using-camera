@@ -50,3 +50,10 @@ python GUI.py
 ![Alt text](https://github.com/habom2310/Heart-rate-measurement-using-camera/blob/master/result.PNG)
 - 17/11:
   - Add find 5 facial landmarks feature. Download and put `shape_predictor_68_face_landmarks.dat` in the project folder.
+
+- 23/11:
+  - Add classes and tests:
+    -`face_utilities`: functions to work with faces in a frame
+    -`test_face_utilities.py`: test the functions in `face_utilities.py`
+    -`signal_processing.py`: functions for signal processing.
+    -`test_signal_processing.py`: test the functions in `signal_processing.py` combined with `face_utilities.py`. Also renders a txt file which has HR over time (of a video).
