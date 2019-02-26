@@ -1,5 +1,5 @@
 # Heart-rate-measurement-using-camera
-[![Alt text](https://github.com/habom2310/Heart-rate-measurement-using-camera/blob/master/result.JPG)https://youtu.be/JeQGSEXk_BQ]
+[![Alt text](https://github.com/habom2310/Heart-rate-measurement-using-camera/blob/master/result.JPG)](https://youtu.be/JeQGSEXk_BQ)
 # Abstract
 - Heart Rate (HR) is one of the most important Physiological parameter and a vital indicator of people‘s physiological state
 - A non-contact based system to measure Heart Rate: real-time application using camera
