@@ -69,7 +69,7 @@ class Process(object):
         processed = np.array(self.data_buffer)
         
         # start calculating after the first 10 frames
-        if L > 10:
+        if L > 30:
             
             self.fps = float(L) / (self.times[-1] - self.times[0])#calculate HR using a true fps of processor of the computer, not the fps the camera provide
             even_times = np.linspace(self.times[0], self.times[-1], L)
