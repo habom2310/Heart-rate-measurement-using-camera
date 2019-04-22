@@ -170,7 +170,7 @@ if __name__ == "__main__":
             bpm = freqs_of_interest[max_arg]
             cv2.putText(frame, "HR: {0:.2f}".format(bpm), (int(frame.shape[1]*0.85),int(frame.shape[0]*0.95)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2)
             #print(detrended_data)
-            filtered_data = sp.butter_bandpass_filter(detrended_data, 0.8, 3, fps, order = 3)
+            filtered_data = sp.butter_bandpass_filter(detrended_data, (bpm-20)/60, (bpm+20)/60, fps, order = 3)
             
         #write to txt file
         with open("data.txt",mode = "a+") as f:
