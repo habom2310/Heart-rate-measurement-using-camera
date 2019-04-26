@@ -25,7 +25,7 @@ class Webcam(object):
         if self.valid:
             _,frame = self.cap.read()
             frame = cv2.flip(frame,1)
-            cv2.putText(frame, str(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
+            #cv2.putText(frame, str(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
                        (65,220), cv2.FONT_HERSHEY_PLAIN, 2, (0,256,256))
         else:
             frame = np.ones((480,640,3), dtype=np.uint8)

@@ -3,6 +3,8 @@ import numpy as np
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 #from PyQt4 import QtTest
+
+import pyqtgraph as pg
 import sys
 import time
 from process import Process
@@ -41,14 +43,14 @@ class GUI(QMainWindow, QThread):
         
         #widgets
         self.btnStart = QPushButton("Start", self)
-        self.btnStart.move(680,400)
+        self.btnStart.move(440,520)
         self.btnStart.setFixedWidth(200)
         self.btnStart.setFixedHeight(50)
         self.btnStart.setFont(font)
         self.btnStart.clicked.connect(self.run)
         
         self.btnOpen = QPushButton("Open", self)
-        self.btnOpen.move(680,340)
+        self.btnOpen.move(230,520)
         self.btnOpen.setFixedWidth(200)
         self.btnOpen.setFixedHeight(50)
         self.btnOpen.setFont(font)
@@ -60,7 +62,7 @@ class GUI(QMainWindow, QThread):
         self.cbbInput.setCurrentIndex(0)
         self.cbbInput.setFixedWidth(200)
         self.cbbInput.setFixedHeight(50)
-        self.cbbInput.move(680,280)
+        self.cbbInput.move(20,520)
         self.cbbInput.setFont(font)
         self.cbbInput.activated.connect(self.selectInput)
         #-------------------
@@ -70,18 +72,45 @@ class GUI(QMainWindow, QThread):
         self.lblDisplay.setStyleSheet("background-color: #000000")
         
         self.lblROI = QLabel(self) #label to show face with ROIs
-        self.lblROI.setGeometry(660,10,256,256)
+        self.lblROI.setGeometry(660,10,200,200)
         self.lblROI.setStyleSheet("background-color: #000000")
         
         self.lblHR = QLabel(self) #label to show HR change over time
-        self.lblHR.setGeometry(680,450,300,40)
+        self.lblHR.setGeometry(900,20,300,40)
         self.lblHR.setFont(font)
+        self.lblHR.setText("Frequency: ")
         
         self.lblHR2 = QLabel(self) #label to show stable HR
-        self.lblHR2.setGeometry(680,485,300,40)
+        self.lblHR2.setGeometry(900,70,300,40)
         self.lblHR2.setFont(font)
+        self.lblHR2.setText("Heart rate: ")
         
-        self.lblPlot = QLabel(self) #label to show plot
+        # self.lbl_Age = QLabel(self) #label to show stable HR
+        # self.lbl_Age.setGeometry(900,120,300,40)
+        # self.lbl_Age.setFont(font)
+        # self.lbl_Age.setText("Age: ")
+        
+        # self.lbl_Gender = QLabel(self) #label to show stable HR
+        # self.lbl_Gender.setGeometry(900,170,300,40)
+        # self.lbl_Gender.setFont(font)
+        # self.lbl_Gender.setText("Gender: ")
+        
+        #dynamic plot
+        self.signal_Plt = pg.PlotWidget(self)
+        
+        self.signal_Plt.move(660,220)
+        self.signal_Plt.resize(480,192)
+        self.signal_Plt.setLabel('bottom', "Signal") 
+        
+        self.fft_Plt = pg.PlotWidget(self)
+        
+        self.fft_Plt.move(660,425)
+        self.fft_Plt.resize(480,192)
+        self.fft_Plt.setLabel('bottom', "FFT") 
+        
+        self.timer = pg.QtCore.QTimer()
+        self.timer.timeout.connect(self.update)
+        self.timer.start(200)
         
         
         self.statusBar = QStatusBar()
@@ -95,10 +124,22 @@ class GUI(QMainWindow, QThread):
         #event change combobox index
         
         #config main window
-        self.setGeometry(100,100,950,540)
+        self.setGeometry(100,100,1160,640)
         #self.center()
         self.setWindowTitle("Heart rate monitor")
         self.show()
+        
+        
+    def update(self):
+        #z = np.random.normal(size=1)
+        #u = np.random.normal(size=1)
+        self.signal_Plt.clear()
+        self.signal_Plt.plot(self.process.samples[20:],pen='g')
+
+        self.fft_Plt.clear()
+        self.fft_Plt.plot(np.column_stack((self.process.freqs, self.process.fft)), pen = 'g')
+        
+        
    
     def center(self):
         qr = self.frameGeometry()
@@ -133,19 +174,19 @@ class GUI(QMainWindow, QThread):
     def mousePressEvent(self, event):
         self.c.closeApp.emit()    
     
-    def make_bpm_plot(self):
+    # def make_bpm_plot(self):
     
-        plotXY([[self.process.times[20:],
-                     self.process.samples[20:]],
-                    [self.process.freqs,
-                     self.process.fft]],
-                    labels=[False, True],
-                    showmax=[False, "bpm"],
-                    label_ndigits=[0, 0],
-                    showmax_digits=[0, 1],
-                    skip=[3, 3],
-                    name="Plot",
-                    bg=None)
+        # plotXY([[self.process.times[20:],
+                     # self.process.samples[20:]],
+                    # [self.process.freqs,
+                     # self.process.fft]],
+                    # labels=[False, True],
+                    # showmax=[False, "bpm"],
+                    # label_ndigits=[0, 0],
+                    # showmax_digits=[0, 1],
+                    # skip=[3, 3],
+                    # name="Plot",
+                    # bg=None)
         
         # fplot = QImage(self.plot, 640, 280, QImage.Format_RGB888)
         # self.lblPlot.setGeometry(10,520,640,280)
@@ -182,6 +223,7 @@ class GUI(QMainWindow, QThread):
         
         self.frame = self.process.frame_out #get the frame to show in GUI
         self.f_fr = self.process.frame_ROI #get the face to show in GUI
+        #print(self.f_fr.shape)
         self.bpm = self.process.bpm #get the bpm change over the time
         
         self.frame = cv2.cvtColor(self.frame, cv2.COLOR_RGB2BGR)
@@ -204,7 +246,9 @@ class GUI(QMainWindow, QThread):
             if(max(self.process.bpms-np.mean(self.process.bpms))<5): #show HR if it is stable -the change is not over 5 bpm- for 3s
                 self.lblHR2.setText("Heart rate: " + str(float("{:.2f}".format(np.mean(self.process.bpms)))) + " bpm")
         
-        self.make_bpm_plot()#need to open a cv2.imshow() window to handle a pause 
+        #self.lbl_Age.setText("Age: "+str(self.process.age))
+        #self.lbl_Gender.setText("Gender: "+str(self.process.gender))
+        #self.make_bpm_plot()#need to open a cv2.imshow() window to handle a pause 
         #QtTest.QTest.qWait(10)#wait for the GUI to respond
         self.key_handler()  #if not the GUI cant show anything
     
