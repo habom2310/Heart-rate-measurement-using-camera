@@ -220,7 +220,7 @@ class Face_utilities():
         '''
         if self.predictor is None:
             print("[INFO] load " + type + " facial landmarks model ...")
-            self.predictor = dlib.shape_predictor("shape_predictor_" + type + "_face_landmarks.dat")
+            self.predictor = dlib.shape_predictor("../shape_predictor_" + type + "_face_landmarks.dat")
             print("[INFO] Load model - DONE!")
         
         if frame is None:

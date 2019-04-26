@@ -35,7 +35,7 @@ if __name__ == "__main__":
     t = time.time()
     
     #for signal_processing
-    BUFFER_SIZE = 300
+    BUFFER_SIZE = 100
     
     fps=0 #for real time capture
     video_fps = cap.get(cv2.CAP_PROP_FPS) # for video capture
@@ -164,7 +164,6 @@ if __name__ == "__main__":
             L = BUFFER_SIZE
         #print(times)
         if L==100:
-        
             fps = float(L) / (times[-1] - times[0])
             cv2.putText(frame, "fps: {0:.2f}".format(fps), (30,int(frame.shape[0]*0.95)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2)
             #
@@ -173,7 +172,7 @@ if __name__ == "__main__":
             #print(len(times))
             interpolated_data = sp.interpolation(detrended_data, times)
             
-            normalized_data = sp.normalization(detrended_data)
+            normalized_data = sp.normalization(interpolated_data)
             
             fft_of_interest, freqs_of_interest = sp.fft(normalized_data, fps)
             
@@ -181,9 +180,9 @@ if __name__ == "__main__":
             bpm = freqs_of_interest[max_arg]
             cv2.putText(frame, "HR: {0:.2f}".format(bpm), (int(frame.shape[1]*0.8),int(frame.shape[0]*0.95)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2)
             #print(detrended_data)
-            #filtered_data = sp.butter_bandpass_filter(interpolated_data, (bpm-20)/60, (bpm+20)/60, fps, order = 3)
+            filtered_data = sp.butter_bandpass_filter(interpolated_data, (bpm-20)/60, (bpm+20)/60, fps, order = 3)
             #print(fps)
-            filtered_data = sp.butter_bandpass_filter(interpolated_data, 0.8, 3, fps, order = 3)
+            #filtered_data = sp.butter_bandpass_filter(interpolated_data, 0.8, 3, fps, order = 3)
             
         #write to txt file
         with open("a.txt",mode = "a+") as f:
