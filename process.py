@@ -35,7 +35,7 @@ class Process(object):
 
         
     def run(self):
-        self.times.append(time.time() - self.t0)
+        
         frame, face_frame, ROI1, ROI2, status, mask = self.fd.face_detect(self.frame_in)
         
         self.frame_out = frame
@@ -56,6 +56,7 @@ class Process(object):
         if(abs(g-np.mean(self.data_buffer))>10 and L>99): #remove sudden change, if the avg value change is over 10, use the mean of the data_buffer
             g = self.data_buffer[-1]
         
+        self.times.append(time.time() - self.t0)
         self.data_buffer.append(g)
 
         
@@ -69,7 +70,7 @@ class Process(object):
         processed = np.array(self.data_buffer)
         
         # start calculating after the first 10 frames
-        if L > 30:
+        if L == self.buffer_size:
             
             self.fps = float(L) / (self.times[-1] - self.times[0])#calculate HR using a true fps of processor of the computer, not the fps the camera provide
             even_times = np.linspace(self.times[0], self.times[-1], L)
