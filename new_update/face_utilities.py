@@ -123,13 +123,32 @@ class Face_utilities():
         (w, h) = (self.desiredFaceWidth, self.desiredFaceHeight)
         aligned_face = cv2.warpAffine(frame, M, (w, h),
             flags=cv2.INTER_CUBIC)
+            
+        #print("1: aligned_shape_1 = {}".format(aligned_shape))
+        #print(aligned_shape.shape)
         
-        # aligned_shape = cv2.transform(shape, M.T)
-        # print("1: aligned_shape_1 ")
-        # print(aligned_shape)
+        if(len(shape)==68):
+            shape = np.reshape(shape,(68,1,2))
+            
+            # cv2.rectangle(aligned_face,(aligned_shape[54][0], aligned_shape[29][1]), #draw rectangle on right and left cheeks
+                    # (aligned_shape[12][0],aligned_shape[33][1]), (0,255,0), 0)
+            # cv2.rectangle(aligned_face, (aligned_shape[4][0], aligned_shape[29][1]), 
+                    # (aligned_shape[48][0],aligned_shape[33][1]), (0,255,0), 0)
+                    
+        else:
+            shape = np.reshape(shape,(5,1,2))
+            # cv2.rectangle(aligned_face, (aligned_shape[0][0],int((aligned_shape[4][1] + aligned_shape[2][1])/2)),
+                        # (aligned_shape[1][0],aligned_shape[4][1]), (0,255,0), 0)
+            
+            # cv2.rectangle(aligned_face, (aligned_shape[2][0],int((aligned_shape[4][1] + aligned_shape[2][1])/2)),
+                        # (aligned_shape[3][0],aligned_shape[4][1]), (0,255,0), 0)
+                  
+        aligned_shape = cv2.transform(shape, M)
+        aligned_shape = np.squeeze(aligned_shape)        
+            
         # print("---")
         # return aligned_face, aligned_shape
-        return aligned_face
+        return aligned_face,aligned_shape
     
     def face_detection(self, frame):
         '''
@@ -242,11 +261,12 @@ class Face_utilities():
             ROI2 =  face[shape[29][1]:shape[33][1], #left cheek
                     shape[4][0]:shape[48][0]]
         else:
-            ROI1 = face[int((shape[4][1] - shape[2][1])/2):shape[4][1], #right cheek
+            ROI1 = face[int((shape[4][1] + shape[2][1])/2):shape[4][1], #right cheek
                     shape[2][0]:shape[3][0]]
                     
-            ROI2 =  face[int((shape[4][1] - shape[2][1])/2):shape[4][1], #left cheek
-                    shape[0][0]:shape[1][0]]
+            ROI2 =  face[int((shape[4][1] + shape[2][1])/2):shape[4][1], #left cheek
+                    shape[1][0]:shape[0][0]]
+                   
                 
         return ROI1, ROI2        
    
@@ -313,16 +333,16 @@ class Face_utilities():
         (x, y, w, h) = face_utils.rect_to_bb(rects[0])
         
         face = frame[y:y+h,x:x+w]
-        aligned_face = self.face_alignment(frame, shape)
+        aligned_face,aligned_shape = self.face_alignment(frame, shape)
         
-        if(type=="5"):
-            aligned_shape, rects_2 = self.get_landmarks(aligned_face, "5")
-            if aligned_shape is None:
-                return None
-        else:    
-            aligned_shape, rects_2 = self.get_landmarks(aligned_face, "68")
-            if aligned_shape is None:
-                return None
+        # if(type=="5"):
+            # aligned_shape, rects_2 = self.get_landmarks(aligned_face, "5")
+            # if aligned_shape is None:
+                # return None
+        # else:    
+            # aligned_shape, rects_2 = self.get_landmarks(aligned_face, "68")
+            # if aligned_shape is None:
+                # return None
                 
         return rects, face, shape, aligned_face, aligned_shape
         
@@ -381,17 +401,17 @@ class Face_utilities():
         if age_gender_on:
             age, gender = self.age_gender_detection(face)
         
-        aligned_face = self.face_alignment(frame, shape)
+        aligned_face, aligned_face = self.face_alignment(frame, shape)
         
-        if face_detect_on:
-            if(type=="5"):
-                aligned_shape, rects_2 = self.get_landmarks(aligned_face, "5")
-                if aligned_shape is None:
-                    return None
-            else:    
-                aligned_shape, rects_2 = self.get_landmarks(aligned_face, "68")
-                if aligned_shape is None:
-                    return None
+        # if face_detect_on:
+            # if(type=="5"):
+                # aligned_shape, rects_2 = self.get_landmarks(aligned_face, "5")
+                # if aligned_shape is None:
+                    # return None
+            # else:    
+                # aligned_shape, rects_2 = self.get_landmarks(aligned_face, "68")
+                # if aligned_shape is None:
+                    # return None
         # print("2: aligned_shape")
         # print(aligned_shape)
         # print("---")

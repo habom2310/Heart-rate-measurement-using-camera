@@ -64,14 +64,23 @@ class Signal_processing():
         
         freqs_in_minute = 60. * freqs
         
-        raw_fft = np.fft.rfft(data_buffer)
+        raw_fft = np.fft.rfft(data_buffer*30)
         fft = np.abs(raw_fft)**2
         
         interest_idx = np.where((freqs_in_minute > 50) & (freqs_in_minute < 180))[0]
+        print(freqs_in_minute)
         interest_idx_sub = interest_idx[:-1].copy() #advoid the indexing error
         freqs_of_interest = freqs_in_minute[interest_idx_sub]
         
         fft_of_interest = fft[interest_idx_sub]
+        
+        
+        # pruned = fft[interest_idx]
+        # pfreq = freqs_in_minute[interest_idx]
+        
+        # freqs_of_interest = pfreq 
+        # fft_of_interest = pruned
+        
         
         return fft_of_interest, freqs_of_interest
 
