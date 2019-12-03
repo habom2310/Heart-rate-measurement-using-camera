@@ -3,7 +3,7 @@ import numpy as np
 import time
 from face_detection import FaceDetection
 from scipy import signal
-from sklearn.decomposition import FastICA
+# from sklearn.decomposition import FastICA
 
 class Process(object):
     def __init__(self):

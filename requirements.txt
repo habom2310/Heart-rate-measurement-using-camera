@@ -4,3 +4,4 @@ imutils==0.5.2
 numpy==1.15.4
 opencv-python==4.1.0.25
 PyQt5==5.12.3
+pyqtgraph==0.10.0
