@@ -99,10 +99,7 @@ class Signal_processing():
         return filtered_data
         
         
-        
-        
-        
-        
+    
         
         
         

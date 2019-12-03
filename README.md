@@ -14,13 +14,12 @@
 - Amplify color to make the color variation visible 
 
 # Requirements
-- numpy, opencv, dlib, imutils, scipy, PyQt4
-- Download and put file "shape_predictor_68_face_landmarks.dat" in the project folder
+```
+pip install -r requirements.txt
+```
 
 
 # Implementation
-- Install all needed packages
-- Run GUI.py, appplication can run on either camera or video mode
 ```
 python GUI.py
 ```
@@ -43,16 +42,3 @@ python GUI.py
 - Sudden change can cause incorrect HR calculation. In the most case, HR can be correctly detected after 10 seconds being stable infront of the camera
 - This github project is for study purpose only. For other purposes, please contact me at khanhhanguyen2310@gmail.com
 
-# UPDATE
-- 6/11: 
-  - Use pyqtgraph for plotting graph
-  - Add age and gender detection
-![Alt text](https://github.com/habom2310/Heart-rate-measurement-using-camera/blob/master/result.PNG)
-- 17/11:
-  - Add find 5 facial landmarks feature. Download and put `shape_predictor_68_face_landmarks.dat` in the project folder.
-
-- 23/11: Add classes and tests in `new_update` folder
-  - `face_utilities`: functions to work with faces in a frame
-  - `test_face_utilities.py`: test the functions in `face_utilities.py`
-  - `signal_processing.py`: functions for signal processing.
-  - `test_signal_processing.py`: test the functions in `signal_processing.py` combined with `face_utilities.py`. Also renders a txt file which has HR over time (of a video).

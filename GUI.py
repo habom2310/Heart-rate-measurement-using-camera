@@ -1,7 +1,12 @@
 import cv2
 import numpy as np
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+# from PyQt4.QtCore import *
+# from PyQt4.QtGui import *
+from PyQt5 import QtCore
+
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 #from PyQt4 import QtTest
 
 import pyqtgraph as pg
@@ -32,8 +37,6 @@ class GUI(QMainWindow, QThread):
         self.frame = np.zeros((10,10,3),np.uint8)
         #self.plot = np.zeros((10,10,3),np.uint8)
         self.bpm = 0
-        
-
         
     def initUI(self):
     
@@ -211,15 +214,14 @@ class GUI(QMainWindow, QThread):
         self.lblDisplay.clear()
         self.lblDisplay.setStyleSheet("background-color: #000000")
 
-    
+    @QtCore.pyqtSlot()
     def main_loop(self):
-    
         frame = self.input.get_frame()
 
         self.process.frame_in = frame
         self.process.run()
         
-        #cv2.imshow("Processed", frame)
+        cv2.imshow("Processed", frame)
         
         self.frame = self.process.frame_out #get the frame to show in GUI
         self.f_fr = self.process.frame_ROI #get the face to show in GUI
@@ -245,13 +247,13 @@ class GUI(QMainWindow, QThread):
         if self.process.bpms.__len__() >50:
             if(max(self.process.bpms-np.mean(self.process.bpms))<5): #show HR if it is stable -the change is not over 5 bpm- for 3s
                 self.lblHR2.setText("Heart rate: " + str(float("{:.2f}".format(np.mean(self.process.bpms)))) + " bpm")
-        
+
         #self.lbl_Age.setText("Age: "+str(self.process.age))
         #self.lbl_Gender.setText("Gender: "+str(self.process.gender))
         #self.make_bpm_plot()#need to open a cv2.imshow() window to handle a pause 
         #QtTest.QTest.qWait(10)#wait for the GUI to respond
         self.key_handler()  #if not the GUI cant show anything
-    
+
     def run(self, input):
         self.reset()
         input = self.input
@@ -274,18 +276,12 @@ class GUI(QMainWindow, QThread):
             input.stop()
             self.btnStart.setText("Start")
             self.cbbInput.setEnabled(True)
-        
-        
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = GUI()
     while ex.status == True:
         ex.main_loop()
-        
-    sys.exit(app.exec_())    
-        
-        
-        
-        
-        
-    
+
+    sys.exit(app.exec_())

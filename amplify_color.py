@@ -14,7 +14,7 @@ from interface import waitKey, plotXY
 class VidMag():
     def __init__(self):
         self.webcam = Webcam()
-        self.buffer_size = 20
+        self.buffer_size = 40
         self.fps = 0
         self.times = []
         self.t0 = time.time()
