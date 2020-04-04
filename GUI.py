@@ -166,12 +166,12 @@ class GUI(QMainWindow, QThread):
             self.input = self.webcam
             print("Input: webcam")
             self.btnOpen.setEnabled(False)
-            self.statusBar.showMessage("Input: webcam",5000)
+            #self.statusBar.showMessage("Input: webcam",5000)
         elif self.cbbInput.currentIndex() == 1:
             self.input = self.video
             print("Input: video")
             self.btnOpen.setEnabled(True)
-            self.statusBar.showMessage("Input: video",5000)
+            #self.statusBar.showMessage("Input: video",5000)
         
     
     def mousePressEvent(self, event):
@@ -207,7 +207,7 @@ class GUI(QMainWindow, QThread):
     
     def openFileDialog(self):
         self.dirname = QFileDialog.getOpenFileName(self, 'OpenFile',r"C:\Users\uidh2238\Desktop\test videos")
-        self.statusBar.showMessage("File name: " + self.dirname,5000)
+        #self.statusBar.showMessage("File name: " + self.dirname,5000)
     
     def reset(self):
         self.process.reset()
@@ -260,7 +260,7 @@ class GUI(QMainWindow, QThread):
         self.input.dirname = self.dirname
         if self.input.dirname == "" and self.input == self.video:
             print("choose a video first")
-            self.statusBar.showMessage("choose a video first",5000)
+            #self.statusBar.showMessage("choose a video first",5000)
             return
         if self.status == False:
             self.status = True
