@@ -1,13 +1,10 @@
 import cv2
 import numpy as np
-# from PyQt4.QtCore import *
-# from PyQt4.QtGui import *
 from PyQt5 import QtCore
 
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-#from PyQt4 import QtTest
+from PyQt5.QtCore import QThread
+from PyQt5.QtGui import QFont, QImage, QPixmap
+from PyQt5.QtWidgets import QPushButton, QApplication, QComboBox, QLabel, QFileDialog, QStatusBar, QDesktopWidget, QMessageBox, QMainWindow
 
 import pyqtgraph as pg
 import sys
@@ -17,10 +14,6 @@ from webcam import Webcam
 from video import Video
 from interface import waitKey, plotXY
 
-class Communicate(QObject):
-    closeApp = pyqtSignal()
-    
-    
 class GUI(QMainWindow, QThread):
     def __init__(self):
         super(GUI,self).__init__()
@@ -37,6 +30,7 @@ class GUI(QMainWindow, QThread):
         self.frame = np.zeros((10,10,3),np.uint8)
         #self.plot = np.zeros((10,10,3),np.uint8)
         self.bpm = 0
+        self.terminate = False
         
     def initUI(self):
     
@@ -119,13 +113,7 @@ class GUI(QMainWindow, QThread):
         self.statusBar = QStatusBar()
         self.statusBar.setFont(font)
         self.setStatusBar(self.statusBar)
-        
-        #event close
-        self.c = Communicate()
-        self.c.closeApp.connect(self.close)
-        
-        #event change combobox index
-        
+
         #config main window
         self.setGeometry(100,100,1160,640)
         #self.center()
@@ -134,16 +122,12 @@ class GUI(QMainWindow, QThread):
         
         
     def update(self):
-        #z = np.random.normal(size=1)
-        #u = np.random.normal(size=1)
         self.signal_Plt.clear()
         self.signal_Plt.plot(self.process.samples[20:],pen='g')
 
         self.fft_Plt.clear()
         self.fft_Plt.plot(np.column_stack((self.process.freqs, self.process.fft)), pen = 'g')
         
-        
-   
     def center(self):
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
@@ -156,7 +140,10 @@ class GUI(QMainWindow, QThread):
         if reply == QMessageBox.Yes:
             event.accept()
             self.input.stop()
-            cv2.destroyAllWindows()
+            # cv2.destroyAllWindows()
+            self.terminate = True
+            sys.exit()
+
         else: 
             event.ignore()
     
@@ -171,14 +158,9 @@ class GUI(QMainWindow, QThread):
             self.input = self.video
             print("Input: video")
             self.btnOpen.setEnabled(True)
-            #self.statusBar.showMessage("Input: video",5000)
-        
-    
-    def mousePressEvent(self, event):
-        self.c.closeApp.emit()    
+            #self.statusBar.showMessage("Input: video",5000)   
     
     # def make_bpm_plot(self):
-    
         # plotXY([[self.process.times[20:],
                      # self.process.samples[20:]],
                     # [self.process.freqs,
@@ -206,7 +188,7 @@ class GUI(QMainWindow, QThread):
             sys.exit()
     
     def openFileDialog(self):
-        self.dirname = QFileDialog.getOpenFileName(self, 'OpenFile',r"C:\Users\uidh2238\Desktop\test videos")
+        self.dirname = QFileDialog.getOpenFileName(self, 'OpenFile')
         #self.statusBar.showMessage("File name: " + self.dirname,5000)
     
     def reset(self):
@@ -214,19 +196,23 @@ class GUI(QMainWindow, QThread):
         self.lblDisplay.clear()
         self.lblDisplay.setStyleSheet("background-color: #000000")
 
-    @QtCore.pyqtSlot()
     def main_loop(self):
         frame = self.input.get_frame()
 
         self.process.frame_in = frame
-        self.process.run()
+        if self.terminate == False:
+            ret = self.process.run()
         
-        cv2.imshow("Processed", frame)
-        
-        self.frame = self.process.frame_out #get the frame to show in GUI
-        self.f_fr = self.process.frame_ROI #get the face to show in GUI
-        #print(self.f_fr.shape)
-        self.bpm = self.process.bpm #get the bpm change over the time
+        # cv2.imshow("Processed", frame)
+        if ret == True:
+            self.frame = self.process.frame_out #get the frame to show in GUI
+            self.f_fr = self.process.frame_ROI #get the face to show in GUI
+            #print(self.f_fr.shape)
+            self.bpm = self.process.bpm #get the bpm change over the time
+        else:
+            self.frame = frame
+            self.f_fr = np.zeros((10, 10, 3), np.uint8)
+            self.bpm = 0
         
         self.frame = cv2.cvtColor(self.frame, cv2.COLOR_RGB2BGR)
         cv2.putText(self.frame, "FPS "+str(float("{:.2f}".format(self.process.fps))),
@@ -248,13 +234,12 @@ class GUI(QMainWindow, QThread):
             if(max(self.process.bpms-np.mean(self.process.bpms))<5): #show HR if it is stable -the change is not over 5 bpm- for 3s
                 self.lblHR2.setText("Heart rate: " + str(float("{:.2f}".format(np.mean(self.process.bpms)))) + " bpm")
 
-        #self.lbl_Age.setText("Age: "+str(self.process.age))
-        #self.lbl_Gender.setText("Gender: "+str(self.process.gender))
         #self.make_bpm_plot()#need to open a cv2.imshow() window to handle a pause 
         #QtTest.QTest.qWait(10)#wait for the GUI to respond
         self.key_handler()  #if not the GUI cant show anything
 
     def run(self, input):
+        print("run")
         self.reset()
         input = self.input
         self.input.dirname = self.dirname
@@ -271,6 +256,7 @@ class GUI(QMainWindow, QThread):
             self.lblHR2.clear()
             while self.status == True:
                 self.main_loop()
+
         elif self.status == True:
             self.status = False
             input.stop()
@@ -281,7 +267,4 @@ class GUI(QMainWindow, QThread):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = GUI()
-    while ex.status == True:
-        ex.main_loop()
-
     sys.exit(app.exec_())

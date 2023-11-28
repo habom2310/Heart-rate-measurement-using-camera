@@ -27,7 +27,6 @@ class FaceDetection(object):
         # detect faces in the grayscale image
         rects = self.detector(gray, 0)
         
-
         # loop over the face detections
         #for (i, rect) in enumerate(rects): 
             # determine the facial landmarks for the face region, then
@@ -60,7 +59,7 @@ class FaceDetection(object):
             if(face_frame.shape[:2][1] != 0):
                 face_frame = imutils.resize(face_frame,width=256)
                 
-            face_frame = self.fa.align(frame,gray,rects[0]) # align face
+            # face_frame = self.fa.align(frame,gray,rects[0]) # align face
             
             grayf = cv2.cvtColor(face_frame, cv2.COLOR_BGR2GRAY)
             rectsf = self.detector(grayf, 0)
