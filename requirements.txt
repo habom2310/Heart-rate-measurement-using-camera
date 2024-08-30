@@ -2,6 +2,6 @@ scipy==1.10.0
 dlib==19.17.0
 imutils==0.5.2
 numpy==1.22.0
-opencv-python==4.2.0.32
+opencv-python==4.8.1.78
 PyQt5==5.12.3
 pyqtgraph==0.10.0
