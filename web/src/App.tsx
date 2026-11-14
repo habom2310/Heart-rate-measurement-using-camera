@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  Heart,
   Info,
   ShieldCheck,
   Sliders,
 } from 'lucide-react';
+import { BrandLogo } from './components/BrandLogo';
 import { CameraFeed } from './components/CameraFeed';
 import { DspSettingsDrawer } from './components/DspSettingsDrawer';
 import { ResetConfirmModal } from './components/ResetConfirmModal';
@@ -194,9 +194,7 @@ export const App: React.FC = () => {
       <header className="border-b border-[#262932] bg-[#18191e]/90 backdrop-blur-md sticky top-0 z-30 px-4 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-rose-500/15 border border-rose-500/30 flex items-center justify-center shrink-0">
-              <Heart className="w-4 h-4 text-rose-500 fill-rose-500" />
-            </div>
+            <BrandLogo size={34} />
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-sm sm:text-base font-bold tracking-tight text-white font-mono">
