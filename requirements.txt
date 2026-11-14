@@ -1,7 +1,4 @@
-scipy==1.10.0
-dlib==19.17.0
-imutils==0.5.2
-numpy==1.22.0
-opencv-python==4.2.0.32
-PyQt5==5.12.3
-pyqtgraph==0.10.0
+numpy>=1.22.0
+scipy>=1.10.0
+opencv-python>=4.8.0
+mediapipe>=0.10.0

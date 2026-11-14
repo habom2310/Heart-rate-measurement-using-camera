@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Nordic Clinical / Braun Precision Palette */
+    --color-surface-base: #111215;      /* Deep warm basalt canvas */
+    --color-surface-card: #18191e;      /* Elevated instrument panel */
+    --color-surface-nested: #202229;    /* Sub-panels, canvas containers */
+    --color-border-subtle: #262932;     /* Technical hairline divider */
+    --color-border-strong: #383c48;     /* Active boundary */
+
+    --color-text-primary: #f4f4f6;      /* Pure Chalk White */
+    --color-text-secondary: #9ca3af;    /* Titanium Slate (>= 5:1 contrast) */
+    --color-text-muted: #6b7280;        /* Subtle technical label */
+
+    /* Authentic Cardiovascular Telemetry */
+    --color-arterial: #e11d48;          /* Arterial Crimson */
+    --color-arterial-core: #fb7185;     /* Waveform core highlight */
+    --color-telemetry-mint: #10b981;    /* Clinical Mint (Telemetry Locked) */
+    --color-telemetry-amber: #f59e0b;   /* Warm Amber (Motion artifact / Buffering) */
+    --color-telemetry-azure: #38bdf8;   /* Steel Azure (FFT Frequency Spectrum) */
+  }
+
+  body {
+    background-color: #111215;
+    color: #f4f4f6;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    overflow-x: hidden;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "tnum";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: rgba(225, 29, 72, 0.3);
+    color: #ffffff;
+  }
+
+  /* Custom Nordic clinical telemetry scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #111215;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #262932;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #383c48;
+  }
+}
+
+/* Picture-in-Picture (PiP) smooth corner docking animation */
+@keyframes pip-dock {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.92) translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.pip-dock-enter {
+  animation: pip-dock 240ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes ghost-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.ghost-placeholder-enter {
+  animation: ghost-fade 200ms ease-out forwards;
+}

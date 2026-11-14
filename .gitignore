@@ -1,6 +1,8 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyc
+*$py.class
 
 # C extensions
 *.so
@@ -19,3 +21,32 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Testing & cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Machine learning models & large data
+*.dat
+!assets/signal.dat
+*.onnx
+*.tflite
+
+# Environment variables
+.env
+.env.*
+
+# Frontend / dependencies
+node_modules/
+
+# IDE / Editor
+.vscode/
+.idea/
+.impeccable/
