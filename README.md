@@ -1,10 +1,24 @@
 # Remote Heart Rate Measurement (rPPG)
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-emerald?style=for-the-badge&logo=githubpages&logoColor=white)](https://habom2310.github.io/Heart-rate-measurement-using-camera/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![React](https://img.shields.io/badge/React-19-61dafb.svg)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org)
 [![Python](https://img.shields.io/badge/Python-3.9%2B-green.svg)](https://www.python.org)
 [![Vite](https://img.shields.io/badge/Vite-8-646cff.svg)](https://vitejs.dev)
+
+---
+
+## 🌐 Live Web Demo
+
+### 👉 [**Open Live Application: habom2310.github.io/Heart-rate-measurement-using-camera**](https://habom2310.github.io/Heart-rate-measurement-using-camera/)
+
+> **Instant Zero-Install Telemetry:**
+> * 📱 **Works on Mobile & Desktop**: Open in Safari, Chrome, or Edge on iPhone, Android, or laptop.
+> * 🔒 **100% Local & Private**: Camera frames never leave your browser. MediaPipe WASM and Web Workers process all telemetry locally.
+> * ⚡ **Synthetic Mode Available**: Built-in 72.0 BPM simulation allows full testing even without a webcam.
+
+---
 
 A modern, high-precision remote photoplethysmography (rPPG) suite that measures heart rate (BPM) and heart rate variability (HRV) contactlessly from facial video. Features a zero-install client-side **Web Application** and a high-performance **Python CLI & SDK**.
 
@@ -31,9 +45,16 @@ A modern, high-precision remote photoplethysmography (rPPG) suite that measures 
 
 ## 🚀 Quickstart
 
-### 1. Web Application (Recommended)
+### 1. Online Demo (Zero-Install)
 
-Run the client-side web application directly in your browser:
+Launch the deployed app directly on any mobile phone or computer:
+👉 **[https://habom2310.github.io/Heart-rate-measurement-using-camera/](https://habom2310.github.io/Heart-rate-measurement-using-camera/)**
+
+---
+
+### 2. Local Web Development
+
+Run the client-side web application locally:
 
 ```bash
 # Navigate to web directory
@@ -59,7 +80,7 @@ python scripts/run_web.py
 python scripts/run_web.py --dev
 ```
 
-### 2. Python CLI & Library
+### 3. Python CLI & Library
 
 Install the Python package locally in editable mode:
 
